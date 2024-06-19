@@ -1,4 +1,4 @@
-## A simple comparision between docker tagging tools :
+### A simple comparision between docker tagging tools :
 
 This script consists of a quick speed comparision of three methods to tag docker images on a remote docker registry. These tools are `crane`, `buildx imagetools` and the normal `docker` pull/push routine. These were the results of my latest test : 
 
