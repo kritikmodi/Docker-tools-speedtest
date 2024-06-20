@@ -27,7 +27,7 @@ def tag_docker_image_using_docker(image_path_with_old_tag, image_path_with_new_t
         subprocess.run(['docker', 'push', image_path_with_new_tag], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         
     except subprocess.CalledProcessError as e:
-        print(f'Error tagging image {image_path_with_old_tag} with {new_tag}: {e}')
+        print(f'Error tagging image {image_path_with_old_tag} with {image_path_with_new_tag}: {e}')
 
 counter = 1
 
