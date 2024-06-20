@@ -1,33 +1,33 @@
 import subprocess
 import time
 
-def tag_docker_image_using_crane(image_path, new_tag):
+def tag_docker_image_using_crane(image_path_with_old_tag, new_tag):
     try:
-        command = ['crane', 'tag', image_path, new_tag]
+        command = ['crane', 'tag', image_path_with_old_tag, new_tag]
         subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     except subprocess.CalledProcessError as e:
-        print(f'Error tagging image {image_path} with {new_tag}: {e}')
+        print(f'Error tagging image {image_path_with_old_tag} with {new_tag}: {e}')
 
-def tag_docker_image_using_imagetools(image_path, new_tag):
+def tag_docker_image_using_imagetools(image_path_with_old_tag, image_path_with_new_tag):
     try:
         command = [
             'docker', 'buildx', 'imagetools', 'create',
-            image_path, '--tag', new_tag
+            image_path_with_old_tag, '--tag', image_path_with_new_tag
         ]
         subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     except subprocess.CalledProcessError as e:
-        print(f'Error tagging image {image_path} with {new_tag}: {e}')
+        print(f'Error tagging image {image_path_with_old_tag} with {image_path_with_new_tag}: {e}')
 
-def tag_docker_image_using_docker(image_path, image_path_with_new_tag):
+def tag_docker_image_using_docker(image_path_with_old_tag, image_path_with_new_tag):
     try:
-        subprocess.run(['docker', 'pull', image_path], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        subprocess.run(['docker', 'tag', image_path, image_path_with_new_tag], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(['docker', 'pull', image_path_with_old_tag], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(['docker', 'tag', image_path_with_old_tag, image_path_with_new_tag], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         subprocess.run(['docker', 'push', image_path_with_new_tag], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         
     except subprocess.CalledProcessError as e:
-        print(f'Error tagging image {image_path} with {new_tag}: {e}')
+        print(f'Error tagging image {image_path_with_old_tag} with {new_tag}: {e}')
 
 counter = 1
 
